@@ -1,4 +1,4 @@
-# Azure.Workbooks
+# Azure.Monitor.Workbooks
 Azure workbook templates for various use cases
 
 How to install a workbook:
