@@ -10,4 +10,4 @@ How to install a workbook:
 
 Templates available:
 
-- DTU Usage over the past X days [DTUUsage](DTUUsage.md)
+- DTU Usage over the past X days [SQLDTUUsage.md](SQLDTUUsage.md)
