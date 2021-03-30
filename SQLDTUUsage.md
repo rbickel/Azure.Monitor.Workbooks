@@ -1,5 +1,7 @@
 DTU Usage report
 
+![image](https://user-images.githubusercontent.com/11852796/112987843-707d9400-9163-11eb-873d-cbaa5b22fa42.png)
+
 ```json
 {
   "version": "Notebook/1.0",
