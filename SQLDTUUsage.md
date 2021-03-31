@@ -121,6 +121,35 @@ DTU Usage report
             "metric": "microsoft.sql/servers/databases-Basic-dtu_limit",
             "aggregation": 3,
             "columnName": "Max Limit DTU"
+          },
+          {
+            "namespace": "microsoft.sql/servers/databases",
+            "metric": "microsoft.sql/servers/databases-Basic-cpu_percent",
+            "aggregation": 4,
+            "columnName": "CPU Average (% DTU)"
+          },
+          {
+            "namespace": "microsoft.sql/servers/databases",
+            "metric": "microsoft.sql/servers/databases-Basic-physical_data_read_percent",
+            "aggregation": 4,
+            "columnName": "Data IO average (% DTU)"
+          },
+          {
+            "namespace": "microsoft.sql/servers/databases",
+            "metric": "microsoft.sql/servers/databases-Basic-log_write_percent",
+            "aggregation": 4,
+            "columnName": "Log IO Average (% DTU)"
+          },
+          {
+            "namespace": "microsoft.sql/servers/databases",
+            "metric": "microsoft.sql/servers/databases-Basic-xtp_storage_percent",
+            "aggregation": 4,
+            "columnName": "Mem OLTP average (% DTU)"
+          },
+          {
+            "namespace": "microsoft.sql/servers/databases",
+            "metric": "microsoft.sql/servers/databases-InstanceAndAppAdvanced-sqlserver_process_memory_percent",
+            "aggregation": 4
           }
         ],
         "gridSettings": {
@@ -171,9 +200,83 @@ DTU Usage report
             {
               "columnMatch": "Limit DTU Timeline",
               "formatter": 5
+            },
+            {
+              "columnMatch": "CPU Average (% DTU) Timeline",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "microsoft.sql/servers/databases-Basic-cpu_percent",
+              "formatter": 1,
+              "numberFormat": {
+                "unit": 1,
+                "options": null
+              }
+            },
+            {
+              "columnMatch": "Data IO (% DTU) Timeline",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "microsoft.sql/servers/databases-Basic-physical_data_read_percent",
+              "formatter": 1,
+              "numberFormat": {
+                "unit": 1,
+                "options": null
+              }
+            },
+            {
+              "columnMatch": "Log IO Average (% DTU) Timeline",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "microsoft.sql/servers/databases-Basic-log_write_percent",
+              "formatter": 1,
+              "numberFormat": {
+                "unit": 1,
+                "options": null
+              }
+            },
+            {
+              "columnMatch": "Data IO average (% DTU) Timeline",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "Mem OLTP average (% DTU) Timeline",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "microsoft.sql/servers/databases-Basic-xtp_storage_percent",
+              "formatter": 1,
+              "numberFormat": {
+                "unit": 1,
+                "options": null
+              }
+            },
+            {
+              "columnMatch": "microsoft.sql/servers/databases-InstanceAndAppAdvanced-sqlserver_process_memory_percent Timeline",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "microsoft.sql/servers/databases-InstanceAndAppAdvanced-sqlserver_process_memory_percent",
+              "formatter": 1,
+              "numberFormat": {
+                "unit": 1,
+                "options": null
+              }
             }
           ],
-          "rowLimit": 10000
+          "rowLimit": 10000,
+          "labelSettings": [
+            {
+              "columnId": "microsoft.sql/servers/databases-InstanceAndAppAdvanced-sqlserver_process_memory_percent",
+              "label": "SQL Server process memory percent (Max)"
+            },
+            {
+              "columnId": "microsoft.sql/servers/databases-InstanceAndAppAdvanced-sqlserver_process_memory_percent Timeline",
+              "label": "SQL Server process memory percent Timeline"
+            }
+          ]
         }
       },
       "name": "metric - 1"
