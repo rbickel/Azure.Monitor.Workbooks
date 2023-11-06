@@ -1,0 +1,1813 @@
+{
+    "version": "Notebook/1.0",
+    "items": [
+      {
+        "type": 9,
+        "content": {
+          "version": "KqlParameterItem/1.0",
+          "parameters": [
+            {
+              "id": "8a584628-bb3e-4313-a71f-966f5342d976",
+              "version": "KqlParameterItem/1.0",
+              "name": "selected_tab",
+              "type": 1,
+              "isRequired": true,
+              "isHiddenWhenLocked": true,
+              "timeContext": {
+                "durationMs": 86400000
+              }
+            },
+            {
+              "id": "069845c9-ceff-4ed5-8a3b-e4fe3eb6d9e9",
+              "version": "KqlParameterItem/1.0",
+              "name": "datetime",
+              "label": "Time range",
+              "type": 4,
+              "typeSettings": {
+                "selectableValues": [
+                  {
+                    "durationMs": 300000
+                  },
+                  {
+                    "durationMs": 900000
+                  },
+                  {
+                    "durationMs": 1800000
+                  },
+                  {
+                    "durationMs": 3600000
+                  },
+                  {
+                    "durationMs": 14400000
+                  },
+                  {
+                    "durationMs": 43200000
+                  },
+                  {
+                    "durationMs": 86400000
+                  },
+                  {
+                    "durationMs": 172800000
+                  },
+                  {
+                    "durationMs": 259200000
+                  },
+                  {
+                    "durationMs": 604800000
+                  },
+                  {
+                    "durationMs": 1209600000
+                  },
+                  {
+                    "durationMs": 2419200000
+                  },
+                  {
+                    "durationMs": 2592000000
+                  },
+                  {
+                    "durationMs": 5184000000
+                  },
+                  {
+                    "durationMs": 7776000000
+                  }
+                ],
+                "allowCustom": true
+              },
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "value": {
+                "durationMs": 3600000
+              }
+            },
+            {
+              "id": "5424d7f2-cf4f-4e03-af4e-515ba05354f1",
+              "version": "KqlParameterItem/1.0",
+              "name": "workspace",
+              "type": 5,
+              "query": "resources\r\n| where type == \"microsoft.operationalinsights/workspaces\"",
+              "crossComponentResources": [
+                "value::all"
+              ],
+              "typeSettings": {
+                "resourceTypeFilter": {
+                  "microsoft.operationalinsights/workspaces": true
+                },
+                "additionalResourceOptions": [],
+                "showDefault": false
+              },
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "value": "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca/resourceGroups/LogicApp/providers/Microsoft.OperationalInsights/workspaces/49d4d128-18c3-4234-882e-7474a719c4ca-LogicApp-WEU",
+              "label": "Workspace"
+            },
+            {
+              "id": "de44faeb-2b67-49af-93bd-745217750674",
+              "version": "KqlParameterItem/1.0",
+              "name": "fitler_status",
+              "label": "Status",
+              "type": 2,
+              "isHiddenWhenLocked": true,
+              "typeSettings": {
+                "additionalResourceOptions": [],
+                "showDefault": false
+              },
+              "jsonData": " [\r\n     { \"value\": \"\", \"label\": \"All\" },\r\n     { \"value\": \"Succeeded\", \"label\": \"Succeeded\" },\r\n     { \"value\": \"Failed\", \"label\": \"Failed\" },\r\n     { \"value\": \"Running\", \"label\": \"Running\" }]",
+              "value": null
+            },
+            {
+              "id": "67632e71-880c-463c-9f5e-53b699afeb5d",
+              "version": "KqlParameterItem/1.0",
+              "name": "filter_workflow",
+              "type": 1,
+              "isHiddenWhenLocked": true
+            }
+          ],
+          "style": "above",
+          "queryType": 0,
+          "resourceType": "microsoft.operationalinsights/workspaces"
+        },
+        "name": "parameters - 1"
+      },
+      {
+        "type": 11,
+        "content": {
+          "version": "LinkItem/1.0",
+          "style": "tabs",
+          "links": [
+            {
+              "id": "9fe6d50e-f177-42bf-bbeb-f8de27e0f01c",
+              "cellValue": "selected_tab",
+              "linkTarget": "parameter",
+              "linkLabel": "Workflows",
+              "subTarget": "workflows",
+              "style": "link"
+            },
+            {
+              "id": "46cdd942-663a-45cc-a71b-095693fa70e7",
+              "cellValue": "selected_tab",
+              "linkTarget": "parameter",
+              "linkLabel": "Alerts",
+              "subTarget": "alerts",
+              "style": "link"
+            },
+            {
+              "id": "cf45aece-34fa-4a0b-8f8a-bb486862fea2",
+              "cellValue": "selected_tab",
+              "linkTarget": "parameter",
+              "linkLabel": "Resource usage",
+              "subTarget": "metrics",
+              "style": "link"
+            }
+          ]
+        },
+        "name": "links - 0"
+      },
+      {
+        "type": 12,
+        "content": {
+          "version": "NotebookGroup/1.0",
+          "groupType": "editable",
+          "items": [
+            {
+              "type": 3,
+              "content": {
+                "version": "KqlItem/1.0",
+                "query": "LogicAppWorkflowRuntime \r\n| where OperationName == \"WorkflowRunCompleted\"\r\n| summarize count() by Status\r\n",
+                "size": 3,
+                "title": "Workflow execution summary",
+                "timeContextFromParameter": "datetime",
+                "exportFieldName": "Status",
+                "exportParameterName": "fitler_status",
+                "queryType": 0,
+                "resourceType": "microsoft.operationalinsights/workspaces",
+                "crossComponentResources": [
+                  "{workspace}"
+                ],
+                "visualization": "piechart",
+                "chartSettings": {
+                  "seriesLabelSettings": [
+                    {
+                      "seriesName": "Succeeded",
+                      "color": "green"
+                    },
+                    {
+                      "seriesName": "Skipped",
+                      "color": "gray"
+                    },
+                    {
+                      "seriesName": "Failed",
+                      "color": "redBright"
+                    }
+                  ]
+                }
+              },
+              "customWidth": "33",
+              "name": "query - 1",
+              "styleSettings": {
+                "margin": "0px",
+                "padding": "0px"
+              }
+            },
+            {
+              "type": 3,
+              "content": {
+                "version": "KqlItem/1.0",
+                "query": "let rawData = \r\nLogicAppWorkflowRuntime \r\n| where OperationName == \"WorkflowRunCompleted\";\r\n\r\nlet failedExecution = rawData\r\n| summarize FailedExecution = countif(Status == \"Failed\"), AllRequests = count() by WorkflowName;\r\n\r\nlet trendFailure = rawData\r\n| make-series FailureTrend = countif(Status == \"Failed\") default = 0 on StartTime from {datetime:start} to {datetime:end} step {datetime:grain} by  _ResourceId, WorkflowName;\r\n\r\nlet trendExecution = rawData\r\n| make-series Trend = count() default = 0 on StartTime from {datetime:start} to {datetime:end} step {datetime:grain} by  _ResourceId, WorkflowName;\r\n\r\nrawData \r\n| join trendFailure on WorkflowName\r\n| join trendExecution on WorkflowName\r\n| join failedExecution on WorkflowName\r\n| extend SuccessRate =  100 * (AllRequests - FailedExecution) / AllRequests, WorkflowId = strcat(_ResourceId, \"/workflows/\", WorkflowName)\r\n| project _ResourceId, WorkflowName, Trend, FailureTrend, FailedExecution, AllRequests, SuccessRate, WorkflowId\r\n| order by SuccessRate asc",
+                "size": 0,
+                "timeContextFromParameter": "datetime",
+                "exportedParameters": [
+                  {
+                    "fieldName": "WorkflowId",
+                    "parameterName": "WorkflowId",
+                    "parameterType": 1
+                  },
+                  {
+                    "fieldName": "WorkflowName",
+                    "parameterName": "filter_workflow",
+                    "parameterType": 1
+                  }
+                ],
+                "queryType": 0,
+                "resourceType": "microsoft.operationalinsights/workspaces",
+                "crossComponentResources": [
+                  "{workspace}"
+                ],
+                "gridSettings": {
+                  "formatters": [
+                    {
+                      "columnMatch": "_ResourceId",
+                      "formatter": 0,
+                      "formatOptions": {
+                        "customColumnWidthSetting": "22.1429ch"
+                      }
+                    },
+                    {
+                      "columnMatch": "WorkflowName",
+                      "formatter": 7,
+                      "formatOptions": {
+                        "linkTarget": "OpenBlade",
+                        "bladeOpenContext": {
+                          "bladeName": "WorkflowMenuBlade",
+                          "extensionName": "Microsoft_Azure_EMA",
+                          "bladeJsonParameters": "{\r\n  \"menuId\": \"workflowOverview\",\r\n  \"resourceId\": \"{WorkflowId}\",\r\n  \"location\": \"{location}\",\r\n  \"isReadOnly~\": true\r\n}"
+                        },
+                        "customColumnWidthSetting": "28.4286ch"
+                      }
+                    },
+                    {
+                      "columnMatch": "Trend",
+                      "formatter": 9,
+                      "formatOptions": {
+                        "palette": "blue"
+                      }
+                    },
+                    {
+                      "columnMatch": "FailureTrend",
+                      "formatter": 9,
+                      "formatOptions": {
+                        "palette": "redBright"
+                      }
+                    },
+                    {
+                      "columnMatch": "FailedExecution",
+                      "formatter": 8,
+                      "formatOptions": {
+                        "palette": "red"
+                      }
+                    },
+                    {
+                      "columnMatch": "SuccessRate",
+                      "formatter": 8,
+                      "formatOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "palette": "redGreen"
+                      },
+                      "numberFormat": {
+                        "unit": 1,
+                        "options": {
+                          "style": "decimal"
+                        }
+                      }
+                    },
+                    {
+                      "columnMatch": "WorkflowId",
+                      "formatter": 5
+                    }
+                  ],
+                  "labelSettings": [
+                    {
+                      "columnId": "_ResourceId",
+                      "label": "LogicApp"
+                    },
+                    {
+                      "columnId": "WorkflowName",
+                      "label": "Workflow"
+                    },
+                    {
+                      "columnId": "Trend",
+                      "label": "Execution trend"
+                    },
+                    {
+                      "columnId": "FailureTrend",
+                      "label": "Failure trend"
+                    },
+                    {
+                      "columnId": "FailedExecution",
+                      "label": "Failed "
+                    },
+                    {
+                      "columnId": "AllRequests",
+                      "label": "Total"
+                    },
+                    {
+                      "columnId": "SuccessRate",
+                      "label": "Success rate"
+                    }
+                  ]
+                }
+              },
+              "customWidth": "67",
+              "name": "query - 5"
+            },
+            {
+              "type": 3,
+              "content": {
+                "version": "KqlItem/1.0",
+                "query": "LogicAppWorkflowRuntime \r\n| where OperationName == \"WorkflowRunStarted\"\r\n| join kind=leftouter (LogicAppWorkflowRuntime | where OperationName == \"WorkflowTriggerStarted\" | project RunId, Trigger=TriggerName) on RunId\r\n| join kind=leftouter (LogicAppWorkflowRuntime | where OperationName == \"WorkflowRunCompleted\" | project RunId, StatusCompleted=Status) on RunId\r\n| where (\"{filter_workflow}\"==\"\" or WorkflowName == \"{filter_workflow}\")\r\n| project StartTime, _ResourceId, WorkflowName, Status=iff(StatusCompleted==\"\", Status, StatusCompleted), WorkflowId, _SubscriptionId, Trigger, RunId, ResourceGroup=split(_ResourceId, '/')[4], View=\"View\", Submit=\"Resubmit\"\r\n| summarize count() by Status, bin(StartTime, {datetime:grain})",
+                "size": 0,
+                "title": "{filter_workflow} Workflow execution status trend",
+                "timeContextFromParameter": "datetime",
+                "queryType": 0,
+                "resourceType": "microsoft.operationalinsights/workspaces",
+                "crossComponentResources": [
+                  "{workspace}"
+                ],
+                "visualization": "areachart",
+                "chartSettings": {
+                  "seriesLabelSettings": [
+                    {
+                      "seriesName": "Failed",
+                      "color": "redBright"
+                    },
+                    {
+                      "seriesName": "Succeeded",
+                      "color": "green"
+                    }
+                  ]
+                }
+              },
+              "name": "query - 4"
+            },
+            {
+              "type": 9,
+              "content": {
+                "version": "KqlParameterItem/1.0",
+                "parameters": [
+                  {
+                    "id": "e09f2835-8a8e-4929-8043-ebf0e1cff03a",
+                    "version": "KqlParameterItem/1.0",
+                    "name": "FilterByStatus",
+                    "label": "Filter by status",
+                    "type": 2,
+                    "typeSettings": {
+                      "additionalResourceOptions": []
+                    },
+                    "jsonData": " [\r\n     { \"value\": \"\", \"label\": \"All\" },\r\n     { \"value\": \"Succeeded\", \"label\": \"Succeeded\" },\r\n     { \"value\": \"Failed\", \"label\": \"Failed\" },\r\n     { \"value\": \"Running\", \"label\": \"Running\" }]",
+                    "timeContext": {
+                      "durationMs": 86400000
+                    },
+                    "value": ""
+                  }
+                ],
+                "style": "pills",
+                "queryType": 0,
+                "resourceType": "microsoft.operationalinsights/workspaces"
+              },
+              "name": "parameters - 6"
+            },
+            {
+              "type": 3,
+              "content": {
+                "version": "KqlItem/1.0",
+                "query": "LogicAppWorkflowRuntime \r\n| where OperationName == \"WorkflowRunStarted\"\r\n| join kind=leftouter (LogicAppWorkflowRuntime | where OperationName == \"WorkflowTriggerStarted\" | project RunId, Trigger=TriggerName) on RunId\r\n| join kind=leftouter (LogicAppWorkflowRuntime | where OperationName == \"WorkflowRunCompleted\" | project RunId, StatusCompleted=Status) on RunId\r\n| join kind=leftouter (LogicAppWorkflowRuntime | where Status != \"Skipped\" and Error != \"\" and parse_json(Error).message !startswith \"an action failed.\"\r\n| extend error = parse_json(Error).message) on RunId\r\n| where (\"{filter_workflow}\"==\"\" or WorkflowName == \"{filter_workflow}\")\r\n| project StartTime, _ResourceId, WorkflowName, ResourceGroup=split(_ResourceId, '/')[4], Status=iff(StatusCompleted==\"\", Status, StatusCompleted), _SubscriptionId, Trigger, error, RunId, Submit=\"Resubmit\", WorkflowId = strcat(_ResourceId, \"/workflows/\", WorkflowName)\r\n| where (\"{FilterByStatus}\" == \"\" or Status == \"{FilterByStatus}\")\r\n| order by StartTime desc\r\n\r\n\r\n\r\n",
+                "size": 2,
+                "title": "{fitler_status} {filter_workflow} workflow executions",
+                "timeContextFromParameter": "datetime",
+                "exportedParameters": [
+                  {
+                    "fieldName": "_ResourceId",
+                    "parameterName": "_ResourceId",
+                    "parameterType": 1
+                  },
+                  {
+                    "fieldName": "Trigger",
+                    "parameterName": "TriggerName",
+                    "parameterType": 1
+                  },
+                  {
+                    "fieldName": "RunId",
+                    "parameterName": "RunId",
+                    "parameterType": 1
+                  },
+                  {},
+                  {
+                    "fieldName": "WorkflowId",
+                    "parameterName": "WorkflowId",
+                    "parameterType": 1
+                  },
+                  {
+                    "fieldName": "WorkflowName",
+                    "parameterName": "WorkflowName",
+                    "parameterType": 1
+                  }
+                ],
+                "queryType": 0,
+                "resourceType": "microsoft.operationalinsights/workspaces",
+                "crossComponentResources": [
+                  "{workspace}"
+                ],
+                "gridSettings": {
+                  "formatters": [
+                    {
+                      "columnMatch": "StartTime",
+                      "formatter": 0,
+                      "formatOptions": {
+                        "customColumnWidthSetting": "23.2857ch"
+                      }
+                    },
+                    {
+                      "columnMatch": "_ResourceId",
+                      "formatter": 0,
+                      "formatOptions": {
+                        "customColumnWidthSetting": "20.8571ch"
+                      }
+                    },
+                    {
+                      "columnMatch": "WorkflowName",
+                      "formatter": 7,
+                      "formatOptions": {
+                        "linkTarget": "OpenBlade",
+                        "bladeOpenContext": {
+                          "bladeName": "WorkflowMenuBlade",
+                          "extensionName": "Microsoft_Azure_EMA",
+                          "bladeJsonParameters": "{\n  \"menuId\": \"workflowOverview\",\n  \"resourceId\": \"{WorkflowId}\",\n  \"location\": \"{location}\",\n  \"isReadOnly~\": true\n}"
+                        },
+                        "customColumnWidthSetting": "23.5714ch"
+                      }
+                    },
+                    {
+                      "columnMatch": "Status",
+                      "formatter": 18,
+                      "formatOptions": {
+                        "thresholdsOptions": "icons",
+                        "thresholdsGrid": [
+                          {
+                            "operator": "==",
+                            "thresholdValue": "Failed",
+                            "representation": "4",
+                            "text": "{0}{1}"
+                          },
+                          {
+                            "operator": "==",
+                            "thresholdValue": "Succeeded",
+                            "representation": "success",
+                            "text": "{0}{1}"
+                          },
+                          {
+                            "operator": "==",
+                            "thresholdValue": "Running",
+                            "representation": "unknown",
+                            "text": "{0}{1}"
+                          },
+                          {
+                            "operator": "==",
+                            "text": "{0}{1}"
+                          },
+                          {
+                            "operator": "Default",
+                            "thresholdValue": null,
+                            "representation": "unknown",
+                            "text": "{0}{1}"
+                          }
+                        ],
+                        "customColumnWidthSetting": "13.1429ch"
+                      }
+                    },
+                    {
+                      "columnMatch": "_SubscriptionId",
+                      "formatter": 5
+                    },
+                    {
+                      "columnMatch": "RunId",
+                      "formatter": 7,
+                      "formatOptions": {
+                        "linkTarget": "OpenBlade",
+                        "bladeOpenContext": {
+                          "bladeName": "WorkflowMonitorBlade",
+                          "extensionName": "Microsoft_Azure_EMA",
+                          "bladeJsonParameters": "{\r\n  \"id\": \"{_ResourceId}/workflows/{WorkflowName}\",\r\n  \"location\": \"{location}\",\r\n  \"resourceId\": \"/workflows/{WorkflowName}/runs/{RunId}\",\r\n  \"runProperties\": {\"waitEndTime\":\"{startTime}\",\"startTime\":\"{startTime}\",\"endTime\":\"{endTime}\",\"status\":\"{status}\",\"correlation\":{\"clientTrackingId\":\"{clientTrackingId}\"},\"workflow\":{\"id\":\"/workflows/{WorkflowName}/versions/{versionId}\",\"name\":\"{versionId}\",\"type\":\"workflows/versions\"},\"trigger\":{\"name\":\"{triggerName}\",\"startTime\":\"{startTime}\",\"endTime\":\"{endTime}\",\"scheduledTime\":\"{startTime}\",\"originHistoryName\":\"{RunId}\",\"correlation\":{\"clientTrackingId\":\"{clientTrackingId}\"},\"code\":\"{statusCode}\",\"status\":\"{status}\"},\"outputs\":{}},\r\n\"isReadOnly\": 1\r\n}"
+                        }
+                      }
+                    },
+                    {
+                      "columnMatch": "Submit",
+                      "formatter": 7,
+                      "formatOptions": {
+                        "linkTarget": "ArmAction",
+                        "linkLabel": "Resubmit",
+                        "linkIsContextBlade": true,
+                        "armActionContext": {
+                          "path": "{_ResourceId}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{WorkflowName}/triggers/{TriggerName}/histories/{RunId}/resubmit?api-version=2018-11-01",
+                          "headers": [],
+                          "params": [],
+                          "responseType": "json",
+                          "httpMethod": "POST",
+                          "title": "Resubmit Workflow",
+                          "description": "\n## Do you want to re-run this workflow ?\n\nThis action will re-trigger the workflow with the same trigger parameters as this execution.\n",
+                          "runLabel": "Re-run the workflow"
+                        }
+                      }
+                    },
+                    {
+                      "columnMatch": "WorkflowId",
+                      "formatter": 5
+                    },
+                    {
+                      "columnMatch": "View",
+                      "formatter": 7,
+                      "formatOptions": {
+                        "linkColumn": "_ResourceId",
+                        "linkTarget": "OpenBlade",
+                        "linkLabel": "",
+                        "linkIsContextBlade": false,
+                        "armActionContext": {
+                          "path": "https://management.azure.com/subscriptions/{_SubscriptionId}/resourceGroups/{ResourceGroup}/providers/Microsoft.Logic/workflows/{WorkflowName}/triggers/{TriggerName}/histories/{RunId}/resubmit?api-version=2016-06-01",
+                          "headers": [],
+                          "params": [
+                            {
+                              "key": "TriggerName",
+                              "value": "TriggerName"
+                            }
+                          ],
+                          "httpMethod": "POST",
+                          "description": "# Actions can potentially modify resources.\n## Please use caution and include a confirmation message in this description when authoring this command.",
+                          "runLabel": "fdsffsd"
+                        },
+                        "bladeOpenContext": {
+                          "bladeName": "WorkflowMonitorBlade",
+                          "extensionName": "Microsoft_Azure_EMA",
+                          "bladeJsonParameters": "{\r\n  \"id\": \"{_ResourceId}/workflows/{WorkflowName}\",\r\n  \"location\": \"{location}\",\r\n  \"resourceId\": \"/workflows/{WorkflowName}/runs/{RunId}\",\r\n  \"runProperties\": {\"waitEndTime\":\"{startTime}\",\"startTime\":\"{startTime}\",\"endTime\":\"{endTime}\",\"status\":\"{status}\",\"correlation\":{\"clientTrackingId\":\"{clientTrackingId}\"},\"workflow\":{\"id\":\"/workflows/{WorkflowName}/versions/{versionId}\",\"name\":\"{versionId}\",\"type\":\"workflows/versions\"},\"trigger\":{\"name\":\"{triggerName}\",\"startTime\":\"{startTime}\",\"endTime\":\"{endTime}\",\"scheduledTime\":\"{startTime}\",\"originHistoryName\":\"{RunId}\",\"correlation\":{\"clientTrackingId\":\"{clientTrackingId}\"},\"code\":\"{statusCode}\",\"status\":\"{status}\"},\"outputs\":{}},\r\n\"isReadOnly\": 1\r\n}\r\n"
+                        }
+                      }
+                    },
+                    {
+                      "columnMatch": "TriggerName",
+                      "formatter": 5
+                    }
+                  ],
+                  "labelSettings": [
+                    {
+                      "columnId": "_ResourceId",
+                      "label": "LogicApp"
+                    }
+                  ]
+                }
+              },
+              "name": "query - 3",
+              "styleSettings": {
+                "showBorder": true
+              }
+            }
+          ]
+        },
+        "conditionalVisibility": {
+          "parameterName": "selected_tab",
+          "comparison": "isEqualTo",
+          "value": "workflows"
+        },
+        "name": "workflows"
+      },
+      {
+        "type": 12,
+        "content": {
+          "version": "NotebookGroup/1.0",
+          "groupType": "editable",
+          "items": [
+            {
+              "type": 10,
+              "content": {
+                "chartId": "workbookd77f631e-cb29-4338-b664-f52a33672195",
+                "version": "MetricsItem/2.0",
+                "size": 0,
+                "chartType": 2,
+                "resourceType": "microsoft.web/serverfarms",
+                "metricScope": 0,
+                "resourceIds": [
+                  "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca/resourceGroups/LogicApp/providers/Microsoft.Web/serverFarms/rbkllogicplan"
+                ],
+                "timeContextFromParameter": "datetime",
+                "timeContext": {
+                  "durationMs": 86400000
+                },
+                "metrics": [
+                  {
+                    "namespace": "microsoft.web/serverfarms",
+                    "metric": "microsoft.web/serverfarms--CpuPercentage",
+                    "aggregation": 4,
+                    "splitBy": null
+                  },
+                  {
+                    "namespace": "microsoft.web/serverfarms",
+                    "metric": "microsoft.web/serverfarms--MemoryPercentage",
+                    "aggregation": 4
+                  }
+                ],
+                "title": "CPU and Memory usage",
+                "gridSettings": {
+                  "rowLimit": 10000
+                }
+              },
+              "name": "metric - 3"
+            },
+            {
+              "type": 10,
+              "content": {
+                "chartId": "workbook88d802b6-7873-4eaf-8285-5568ec01f3b6",
+                "version": "MetricsItem/2.0",
+                "size": 0,
+                "chartType": 2,
+                "resourceType": "microsoft.web/sites",
+                "metricScope": 0,
+                "resourceIds": [
+                  "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca/resourceGroups/LogicApp/providers/Microsoft.Web/sites/rbklsummary",
+                  "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca/resourceGroups/LogicApp/providers/Microsoft.Web/sites/rbklpoleemploie",
+                  "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca/resourceGroups/LogicApp/providers/Microsoft.Web/sites/rbkllogic"
+                ],
+                "timeContextFromParameter": "datetime",
+                "timeContext": {
+                  "durationMs": 86400000
+                },
+                "metrics": [
+                  {
+                    "namespace": "microsoft.web/sites",
+                    "metric": "microsoft.web/sites--MemoryWorkingSet",
+                    "aggregation": 4,
+                    "splitBy": null
+                  }
+                ],
+                "gridSettings": {
+                  "rowLimit": 10000
+                }
+              },
+              "name": "metric - 1"
+            },
+            {
+              "type": 10,
+              "content": {
+                "chartId": "workbooka74f1b70-a098-4dee-a4e9-b5c42ab3da9b",
+                "version": "MetricsItem/2.0",
+                "size": 0,
+                "chartType": 2,
+                "resourceType": "microsoft.web/sites",
+                "metricScope": 0,
+                "resourceIds": [
+                  "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca/resourceGroups/LogicApp/providers/Microsoft.Web/sites/rbklsummary",
+                  "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca/resourceGroups/LogicApp/providers/Microsoft.Web/sites/rbklpoleemploie",
+                  "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca/resourceGroups/LogicApp/providers/Microsoft.Web/sites/rbkllogic"
+                ],
+                "timeContextFromParameter": "datetime",
+                "timeContext": {
+                  "durationMs": 86400000
+                },
+                "metrics": [
+                  {
+                    "namespace": "microsoft.web/sites",
+                    "metric": "microsoft.web/sites--Http5xx",
+                    "aggregation": 1,
+                    "splitBy": null
+                  }
+                ],
+                "gridSettings": {
+                  "rowLimit": 10000
+                }
+              },
+              "name": "metric - 3"
+            }
+          ]
+        },
+        "conditionalVisibility": {
+          "parameterName": "selected_tab",
+          "comparison": "isEqualTo",
+          "value": "metrics"
+        },
+        "name": "tab metrics"
+      },
+      {
+        "type": 12,
+        "content": {
+          "version": "NotebookGroup/1.0",
+          "groupType": "editable",
+          "items": [
+            {
+              "type": 3,
+              "content": {
+                "version": "KqlItem/1.0",
+                "query": "resources\r\n| where type =~ 'microsoft.insights/activitylogalerts'\r\n          or type =~ 'microsoft.alertsmanagement/smartdetectoralertrules'\r\n          or type =~ 'microsoft.insights/scheduledqueryrules'\r\n          or type =~ 'microsoft.insights/alertrules'\r\n          or type =~ 'microsoft.insights/metricalerts'\r\n| extend Enabled = iff(isnotnull(properties.state), properties.state, properties.enabled),\r\n                Severity = properties.severity,\r\n                AutoResolve = properties.autoMitigate,\r\n                Query = properties.source.query\r\n| extend Enabled = case(Enabled == \"Enabled\", \"true\", Enabled == \"Disabled\", \"false\", Enabled)\r\n| extend Condition = properties.criteria.allOf\r\n| extend Condition = properties.criteria.allOf\r\n| mv-expand Condition\r\n| extend AlertTarget = case(\r\n                properties.criteria contains 'Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria', 'App Insights',\r\n                type =~ 'microsoft.insights/activitylogalerts', 'ActivityLog',\r\n                type =~ 'microsoft.insights/components', 'App Insights',\r\n                type =~ 'microsoft.operationalinsights/workspaces', 'Log Analytics', \r\n                type =~ 'microsoft.insights/scheduledqueryrules', 'Log Analytics',\r\n                type =~ 'microsoft.alertsmanagement/smartdetectoralertrules', 'App Insights',\r\n                type =~ 'microsoft.insights/components', 'App Insights',\r\n                Condition.metricNamespace =~ 'microsoft.insights/components', 'App Insights',\r\n                Condition.metricNamespace =~ 'Microsoft.OperationalInsights/workspaces', 'Log Analytics',\r\n                tolower(Condition.metricNamespace))\r\n| join kind=leftouter(\r\n              alertsmanagementresources \r\n                    | extend FireTime = todatetime(properties.essentials.startDateTime), \r\n                                    LastModifiedTime = todatetime(properties.essentials.lastModifiedDateTime),\r\n                                    MonitorCondition = tostring(properties.essentials.monitorCondition)\r\n                     | extend TimeOpen = iff(MonitorCondition == \"Resolved\", datetime_diff('minute', LastModifiedTime, FireTime), datetime_diff('minute', now(), FireTime))\r\n                     | where FireTime {datetime}\r\n                     | summarize count(), avg(TimeOpen) by name) \r\n              on name\r\n| extend TimesFired = iff(isnull(count_), 0, count_)\r\n| project-away name1, count_\r\n| extend Scopes = properties.scopes\r\n| extend TargetResource = todynamic(case(\r\n                 type =~ 'microsoft.insights/scheduledqueryrules', properties.source.dataSourceId,\r\n                 type =~ 'microsoft.alertsmanagement/smartdetectoralertrules', properties.scope, properties.scopes))\r\n| extend TargetResource = iff(isnull(TargetResource), Scopes, TargetResource)\r\n| mv-expand TargetResource\r\n| extend ActionGroup = todynamic(case( \r\n                 type =~ 'microsoft.alertsmanagement/smartdetectoralertrules', properties.actionGroups.groupIds, \r\n                 type =~ 'microsoft.insights/metricalerts', properties.actions, \r\n                 type =~ 'microsoft.insights/scheduledqueryrules', properties.action.aznsAction.actionGroup, \r\n                 type =~ 'microsoft.insights/activitylogalerts', properties.actions.actionGroups, '')) \r\n| mv-expand ActionGroup \r\n| extend ActionGroup = case(\r\n                 isnull(ActionGroup), 'No Action Group Assigned', \r\n                 isnotnull(ActionGroup.actionGroupId), tolower(ActionGroup.actionGroupId), \r\n                 tolower(ActionGroup)) \r\n| join kind=leftouter ( \r\n                 resources \r\n                       | where type =~ 'microsoft.insights/actiongroups'\r\n                       | extend Email = properties.emailReceivers \r\n                       | mv-expand Email = Email \r\n                       | summarize EmailList=make_list(Email.emailAddress) by ActionGroup=tolower(id)) \r\n                 on ActionGroup\r\n| extend AutoResolve = iff(isnull(AutoResolve), \"N/A\", AutoResolve),\r\nDetails = pack_all()\r\n| project id, name, AlertTarget, avg_TimeOpen, TimesFired, TargetResource, subscriptionId, Enabled, Severity, AutoResolve, Query, EmailList, Details\r\n| where AlertTarget == \"microsoft.web/sites\"\r\n| sort by TimesFired desc\r\n",
+                "size": 4,
+                "title": "Alert rules",
+                "queryType": 1,
+                "resourceType": "microsoft.resourcegraph/resources",
+                "crossComponentResources": [
+                  "value::all"
+                ],
+                "gridSettings": {
+                  "formatters": [
+                    {
+                      "columnMatch": "name",
+                      "formatter": 5
+                    },
+                    {
+                      "columnMatch": "avg_TimeOpen",
+                      "formatter": 8,
+                      "formatOptions": {
+                        "palette": "greenRed"
+                      },
+                      "numberFormat": {
+                        "unit": 25,
+                        "options": {
+                          "style": "decimal"
+                        }
+                      }
+                    },
+                    {
+                      "columnMatch": "TimesFired",
+                      "formatter": 8,
+                      "formatOptions": {
+                        "palette": "greenRed"
+                      }
+                    },
+                    {
+                      "columnMatch": "TargetResource",
+                      "formatter": 13,
+                      "formatOptions": {
+                        "linkTarget": null,
+                        "showIcon": true
+                      }
+                    },
+                    {
+                      "columnMatch": "subscriptionId",
+                      "formatter": 15,
+                      "formatOptions": {
+                        "linkTarget": null,
+                        "showIcon": true
+                      }
+                    },
+                    {
+                      "columnMatch": "Enabled",
+                      "formatter": 18,
+                      "formatOptions": {
+                        "thresholdsOptions": "icons",
+                        "thresholdsGrid": [
+                          {
+                            "operator": "==",
+                            "thresholdValue": "true",
+                            "representation": "success",
+                            "text": "{0}{1}"
+                          },
+                          {
+                            "operator": "Default",
+                            "thresholdValue": null,
+                            "representation": "disabled",
+                            "text": "{0}{1}"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "columnMatch": "Details",
+                      "formatter": 7,
+                      "formatOptions": {
+                        "linkTarget": "CellDetails",
+                        "linkLabel": "🔍 View Details",
+                        "linkIsContextBlade": true
+                      }
+                    },
+                    {
+                      "columnMatch": "Group",
+                      "formatter": 15,
+                      "formatOptions": {
+                        "linkTarget": null,
+                        "showIcon": true
+                      }
+                    }
+                  ],
+                  "labelSettings": [
+                    {
+                      "columnId": "id",
+                      "label": "Alert name"
+                    },
+                    {
+                      "columnId": "avg_TimeOpen",
+                      "label": "OpenTime"
+                    }
+                  ]
+                }
+              },
+              "name": "query - 0"
+            },
+            {
+              "type": 12,
+              "content": {
+                "version": "NotebookGroup/1.0",
+                "groupType": "editable",
+                "title": "Active alerts",
+                "items": [
+                  {
+                    "type": 3,
+                    "content": {
+                      "version": "KqlItem/1.0",
+                      "query": "alertsmanagementresources\r\n| extend FireTime = todatetime(properties.essentials.startDateTime), \r\n         Severity = tostring(properties.essentials.severity), \r\n         MonitorCondition = tostring(properties.essentials.monitorCondition), \r\n         AlertTarget = tostring(properties.essentials.targetResourceType), \r\n         MonitorService = tostring(properties.essentials.monitorService)\r\n| where FireTime {datetime}\r\n| extend AlertTarget = case(\r\n        MonitorService == 'ActivityLog Administrative', 'ActivityLog',\r\n        AlertTarget == 'microsoft.insights/components', 'App Insights',\r\n        AlertTarget == 'microsoft.operationalinsights/workspaces', 'Log Analytics', \r\n        AlertTarget)\r\n| summarize Sev0 = countif(Severity == \"Sev0\"), \r\n            Sev1 = countif(Severity == \"Sev1\"), \r\n            Sev2 = countif(Severity == \"Sev2\"), \r\n            Sev3 = countif(Severity == \"Sev3\"), \r\n            Sev4 = countif(Severity == \"Sev4\"),\r\n            Resolved = countif(MonitorCondition == \"Resolved\"),\r\n            Fired = countif(MonitorCondition == \"Fired\"),\r\n            Total = count()\r\n| extend Chart = pack_all()\r\n| project Chart\r\n| mv-expand bagexpansion = array Chart\r\n| project tostring(name = Chart[0]), todouble(val = Chart[1])\r\n| sort by val desc\r\n| sort by name desc",
+                      "size": 1,
+                      "title": "Alerts for all Selected Subscriptions",
+                      "queryType": 1,
+                      "resourceType": "microsoft.resourcegraph/resources",
+                      "crossComponentResources": [
+                        "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca"
+                      ],
+                      "visualization": "tiles",
+                      "tileSettings": {
+                        "titleContent": {
+                          "columnMatch": "name",
+                          "formatter": 18,
+                          "formatOptions": {
+                            "thresholdsOptions": "icons",
+                            "thresholdsGrid": [
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Total",
+                                "representation": "Alert",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Fired",
+                                "representation": "Fired",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Resolved",
+                                "representation": "Resolved",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev4",
+                                "representation": "Sev4",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev3",
+                                "representation": "Sev3",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev2",
+                                "representation": "Sev2",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev1",
+                                "representation": "Sev1",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev0",
+                                "representation": "Sev0",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "Default",
+                                "thresholdValue": null,
+                                "representation": "cancelled",
+                                "text": "{0}{1}"
+                              }
+                            ]
+                          }
+                        },
+                        "leftContent": {
+                          "columnMatch": "val",
+                          "formatter": 12,
+                          "formatOptions": {
+                            "palette": "blue"
+                          }
+                        },
+                        "showBorder": true
+                      },
+                      "graphSettings": {
+                        "type": 0
+                      }
+                    },
+                    "name": "query - 0"
+                  },
+                  {
+                    "type": 3,
+                    "content": {
+                      "version": "KqlItem/1.0",
+                      "query": "alertsmanagementresources\r\n| extend FireTime = todatetime(properties.essentials.startDateTime), \r\n         Severity = tostring(properties.essentials.severity), \r\n         MonitorCondition = tostring(properties.essentials.monitorCondition), \r\n         AlertTarget = tostring(properties.essentials.targetResourceType), \r\n         MonitorService = tostring(properties.essentials.monitorService)\r\n| where FireTime {datetime}\r\n| extend AlertTarget = case(\r\n        MonitorService == 'ActivityLog Administrative', 'ActivityLog',\r\n        AlertTarget == 'microsoft.insights/components', 'App Insights',\r\n        AlertTarget == 'microsoft.operationalinsights/workspaces', 'Log Analytics', \r\n        AlertTarget)\r\n| summarize Sev0 = countif(Severity == \"Sev0\"), \r\n            Sev1 = countif(Severity == \"Sev1\"), \r\n            Sev2 = countif(Severity == \"Sev2\"), \r\n            Sev3 = countif(Severity == \"Sev3\"), \r\n            Sev4 = countif(Severity == \"Sev4\"),\r\n            Resolved = countif(MonitorCondition == \"Resolve\"),\r\n            Fired = countif(MonitorCondition == \"Fired\"),\r\n            Total = count() by subscriptionId\r\n| sort by Fired desc",
+                      "size": 4,
+                      "title": "Alerts by Subscription",
+                      "queryType": 1,
+                      "resourceType": "microsoft.resourcegraph/resources",
+                      "crossComponentResources": [
+                        "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca"
+                      ],
+                      "visualization": "table",
+                      "gridSettings": {
+                        "formatters": [
+                          {
+                            "columnMatch": "$gen_group",
+                            "formatter": 15,
+                            "formatOptions": {
+                              "linkTarget": null,
+                              "showIcon": true
+                            }
+                          },
+                          {
+                            "columnMatch": "Group",
+                            "formatter": 15,
+                            "formatOptions": {
+                              "linkTarget": null,
+                              "showIcon": true
+                            }
+                          },
+                          {
+                            "columnMatch": "subscriptionId",
+                            "formatter": 5
+                          },
+                          {
+                            "columnMatch": "Total",
+                            "formatter": 22,
+                            "formatOptions": {
+                              "compositeBarSettings": {
+                                "labelText": "Total Alerts",
+                                "columnSettings": [
+                                  {
+                                    "columnName": "Sev0",
+                                    "color": "redBright"
+                                  },
+                                  {
+                                    "columnName": "Sev1",
+                                    "color": "orange"
+                                  },
+                                  {
+                                    "columnName": "Sev2",
+                                    "color": "yellow"
+                                  },
+                                  {
+                                    "columnName": "Sev3",
+                                    "color": "blue"
+                                  },
+                                  {
+                                    "columnName": "Sev4",
+                                    "color": "blueDark"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ],
+                        "hierarchySettings": {
+                          "treeType": 1,
+                          "groupBy": [
+                            "subscriptionId"
+                          ],
+                          "expandTopLevel": true,
+                          "finalBy": "Total"
+                        },
+                        "sortBy": [
+                          {
+                            "itemKey": "Fired",
+                            "sortOrder": 2
+                          }
+                        ]
+                      },
+                      "sortBy": [
+                        {
+                          "itemKey": "Fired",
+                          "sortOrder": 2
+                        }
+                      ],
+                      "tileSettings": {
+                        "titleContent": {
+                          "columnMatch": "name",
+                          "formatter": 18,
+                          "formatOptions": {
+                            "thresholdsOptions": "icons",
+                            "thresholdsGrid": [
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Total",
+                                "representation": "Alert",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Fired",
+                                "representation": "Fired",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Resolved",
+                                "representation": "Resolved",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev4",
+                                "representation": "Sev4",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev3",
+                                "representation": "Sev3",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev2",
+                                "representation": "Sev2",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev1",
+                                "representation": "Sev1",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "==",
+                                "thresholdValue": "Sev0",
+                                "representation": "Sev0",
+                                "text": "{0}{1}"
+                              },
+                              {
+                                "operator": "Default",
+                                "thresholdValue": null,
+                                "representation": "cancelled",
+                                "text": "{0}{1}"
+                              }
+                            ]
+                          }
+                        },
+                        "leftContent": {
+                          "columnMatch": "val",
+                          "formatter": 12,
+                          "formatOptions": {
+                            "palette": "blue"
+                          }
+                        },
+                        "showBorder": true
+                      },
+                      "graphSettings": {
+                        "type": 0
+                      }
+                    },
+                    "name": "query - 0 - Copy"
+                  },
+                  {
+                    "type": 3,
+                    "content": {
+                      "version": "KqlItem/1.0",
+                      "query": "alertsmanagementresources\r\n| extend FireTime = todatetime(properties.essentials.startDateTime), \r\n         LastModifiedTime = todatetime(properties.essentials.lastModifiedDateTime),\r\n         Severity = tostring(properties.essentials.severity), \r\n         MonitorCondition = tostring(properties.essentials.monitorCondition), \r\n         AlertTarget = tostring(properties.essentials.targetResourceType), \r\n         MonitorService = tostring(properties.essentials.monitorService),\r\n         ResolvedTime = todatetime(properties.essentials.monitorConditionResolvedDateTime)\r\n| where FireTime {datetime}\r\n| extend AlertTarget = case(\r\n                MonitorService == 'ActivityLog Administrative', 'ActivityLog',\r\n                AlertTarget == 'microsoft.insights/components', 'App Insights',\r\n                AlertTarget == 'microsoft.operationalinsights/workspaces', 'Log Analytics', \r\n                AlertTarget)         \r\n| mv-expand Condition = properties.context.context.condition.allOf\r\n| extend SignalLogic = case(\r\n                MonitorService == \"VM Insights - Health\", strcat(\"VM Health for \", properties.essentials.targetResourceName, \" Changed from \", properties.context.monitorStateBeforeAlertCreated, \" to \", properties.context.monitorStateWhenAlertCreated),\r\n                AlertTarget == \"ActivityLog\", strcat(\"When the Activity Log has Category = \", properties.context.context.activityLog.properties.eventCategory, \" and Signal name = \", properties.context.context.activityLog.properties.message),\r\n                MonitorService == \"Smart Detector\", strcat(properties.SmartDetectorName, \" Detected failure rate of \", properties.DetectedFailureRate, \" above normal failure rate of \", properties.context.NormalFailureRate),\r\n                MonitorService == \"Log Analytics\", strcat(\"Alert when \", properties.context.AlertType, \" is \", properties.context.AlertThresholdOperator, \" threshold \", properties.context.AlertThresholdValue),\r\n                MonitorService == \"ActivityLog Autoscale\", strcat(properties.context.context.activityLog.operationName, \" from \", properties.context.context.activityLog.properties.oldInstancesCount, \" to \", properties.context.context.activityLog.properties.newInstancesCount),\r\n                strcat(\"Alert when metric \", Condition.metricName, Condition.timeAggregation, \" is \", Condition.operator, \" threshold \", Condition.threshold)),\r\n         Query = case(\r\n                 MonitorService == \"Log Alerts V2\", tostring(Condition.searchQuery),\r\n                 MonitorService == \"Log Analytics\", tostring(properties.context.SearchQuery), \"N/A\"),\r\n         MetricValue = iff(MonitorService == \"Log Analytics\", toint(properties.context.ResultCount), toint(Condition.metricValue)),\r\n         AffectedResource = iff(AlertTarget == \"ActivityLog\", properties.context.context.activityLog.subscriptionId, tostring(properties.essentials.targetResourceName))\r\n| extend OpenTime = iff(MonitorCondition == \"Resolved\", datetime_diff('minute', ResolvedTime, FireTime), datetime_diff('minute', now(), FireTime)),\r\n         Details = pack_all()\r\n| project name, AlertTarget, id, subscriptionId, AffectedResource, MonitorCondition, FireTime, LastModifiedTime, OpenTime, SignalLogic, Query, MetricValue, Details",
+                      "size": 0,
+                      "showAnalytics": true,
+                      "title": "Detailed Alert view for Selected Timerange",
+                      "noDataMessage": "No Alerts in the Assigned Time Range",
+                      "showExportToExcel": true,
+                      "queryType": 1,
+                      "resourceType": "microsoft.resourcegraph/resources",
+                      "crossComponentResources": [
+                        "/subscriptions/49d4d128-18c3-4234-882e-7474a719c4ca"
+                      ],
+                      "gridSettings": {
+                        "formatters": [
+                          {
+                            "columnMatch": "$gen_group",
+                            "formatter": 15,
+                            "formatOptions": {
+                              "linkTarget": "OpenBlade",
+                              "linkIsContextBlade": true,
+                              "showIcon": true,
+                              "bladeOpenContext": {
+                                "bladeName": "AlertDetailsTemplateBlade",
+                                "extensionName": "Microsoft_Azure_Monitoring",
+                                "bladeParameters": [
+                                  {
+                                    "name": "alertId",
+                                    "source": "column",
+                                    "value": "id"
+                                  },
+                                  {
+                                    "name": "alertName",
+                                    "source": "column",
+                                    "value": "name"
+                                  },
+                                  {
+                                    "name": "invokedFrom",
+                                    "source": "static",
+                                    "value": "Workbooks"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "columnMatch": "Group",
+                            "formatter": 15,
+                            "formatOptions": {
+                              "linkTarget": "OpenBlade",
+                              "linkIsContextBlade": true,
+                              "showIcon": true,
+                              "bladeOpenContext": {
+                                "bladeName": "AlertDetailsTemplateBlade",
+                                "extensionName": "Microsoft_Azure_Monitoring",
+                                "bladeParameters": [
+                                  {
+                                    "name": "alertId",
+                                    "source": "column",
+                                    "value": "id"
+                                  },
+                                  {
+                                    "name": "alertName",
+                                    "source": "column",
+                                    "value": "name"
+                                  },
+                                  {
+                                    "name": "invokedFrom",
+                                    "source": "static",
+                                    "value": "Workbooks"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "columnMatch": "name",
+                            "formatter": 5,
+                            "formatOptions": {
+                              "linkTarget": "OpenBlade",
+                              "linkIsContextBlade": true,
+                              "bladeOpenContext": {
+                                "bladeName": "AlertDetailsTemplateBlade",
+                                "extensionName": "Microsoft_Azure_Monitoring",
+                                "bladeParameters": [
+                                  {
+                                    "name": "alertId",
+                                    "source": "column",
+                                    "value": "id"
+                                  },
+                                  {
+                                    "name": "alertName",
+                                    "source": "column",
+                                    "value": "name"
+                                  },
+                                  {
+                                    "name": "invokedFrom",
+                                    "source": "static",
+                                    "value": "Workbooks"
+                                  }
+                                ]
+                              }
+                            },
+                            "tooltipFormat": {
+                              "tooltip": "View alert details"
+                            }
+                          },
+                          {
+                            "columnMatch": "id",
+                            "formatter": 5
+                          },
+                          {
+                            "columnMatch": "subscriptionId",
+                            "formatter": 15,
+                            "formatOptions": {
+                              "linkTarget": "OpenBlade",
+                              "linkIsContextBlade": true,
+                              "showIcon": true,
+                              "bladeOpenContext": {
+                                "bladeName": "AlertDetailsTemplateBlade",
+                                "extensionName": "Microsoft_Azure_Monitoring",
+                                "bladeParameters": [
+                                  {
+                                    "name": "alertId",
+                                    "source": "column",
+                                    "value": "id"
+                                  },
+                                  {
+                                    "name": "alertName",
+                                    "source": "column",
+                                    "value": "name"
+                                  },
+                                  {
+                                    "name": "invokedFrom",
+                                    "source": "static",
+                                    "value": "Workbooks"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "columnMatch": "MonitorCondition",
+                            "formatter": 18,
+                            "formatOptions": {
+                              "thresholdsOptions": "icons",
+                              "thresholdsGrid": [
+                                {
+                                  "operator": "==",
+                                  "thresholdValue": "Fired",
+                                  "representation": "2",
+                                  "text": "{0}{1}"
+                                },
+                                {
+                                  "operator": "==",
+                                  "thresholdValue": "Resolved",
+                                  "representation": "success",
+                                  "text": "{0}{1}"
+                                },
+                                {
+                                  "operator": "Default",
+                                  "thresholdValue": null,
+                                  "representation": "success",
+                                  "text": "{0}{1}"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "columnMatch": "FireTime",
+                            "formatter": 6
+                          },
+                          {
+                            "columnMatch": "LastModifiedTime",
+                            "formatter": 6
+                          },
+                          {
+                            "columnMatch": "OpenTime",
+                            "formatter": 8,
+                            "formatOptions": {
+                              "palette": "greenRed"
+                            },
+                            "numberFormat": {
+                              "unit": 25,
+                              "options": {
+                                "style": "decimal"
+                              }
+                            }
+                          },
+                          {
+                            "columnMatch": "Details",
+                            "formatter": 7,
+                            "formatOptions": {
+                              "linkTarget": "CellDetails",
+                              "linkLabel": "🔍 View Details",
+                              "linkIsContextBlade": true
+                            }
+                          }
+                        ],
+                        "rowLimit": 10000,
+                        "filter": true,
+                        "hierarchySettings": {
+                          "treeType": 1,
+                          "groupBy": [
+                            "subscriptionId"
+                          ],
+                          "expandTopLevel": true,
+                          "finalBy": "name"
+                        }
+                      }
+                    },
+                    "showPin": true,
+                    "name": "query - 1"
+                  }
+                ]
+              },
+              "name": "group - 1"
+            }
+          ]
+        },
+        "conditionalVisibility": {
+          "parameterName": "selected_tab",
+          "comparison": "isEqualTo",
+          "value": "alerts"
+        },
+        "name": "group - alerts"
+      },
+      {
+        "type": 12,
+        "content": {
+          "version": "NotebookGroup/1.0",
+          "groupType": "editable",
+          "items": [
+            {
+              "type": 3,
+              "content": {
+                "version": "KqlItem/1.0",
+                "query": "alertsmanagementresources\r\n| extend FireTime = todatetime(properties.essentials.startDateTime), \r\n         Severity = tostring(properties.essentials.severity), \r\n         MonitorCondition = tostring(properties.essentials.monitorCondition), \r\n         AlertTarget = tostring(properties.essentials.targetResourceType), \r\n         MonitorService = tostring(properties.essentials.monitorService)\r\n| where FireTime {TimeRange}\r\n| extend AlertTarget = case(\r\n        MonitorService == 'ActivityLog Administrative', 'ActivityLog',\r\n        AlertTarget == 'microsoft.insights/components', 'App Insights',\r\n        AlertTarget == 'microsoft.operationalinsights/workspaces', 'Log Analytics', \r\n        AlertTarget)\r\n| where AlertTarget in~ ({AlertTarget}) or '*' in~ ({AlertTarget})\r\n| summarize Sev0 = countif(Severity == \"Sev0\"), \r\n            Sev1 = countif(Severity == \"Sev1\"), \r\n            Sev2 = countif(Severity == \"Sev2\"), \r\n            Sev3 = countif(Severity == \"Sev3\"), \r\n            Sev4 = countif(Severity == \"Sev4\"),\r\n            Resolved = countif(MonitorCondition == \"Resolved\"),\r\n            Fired = countif(MonitorCondition == \"Fired\"),\r\n            Total = count()\r\n| extend Chart = pack_all()\r\n| project Chart\r\n| mv-expand bagexpansion = array Chart\r\n| project tostring(name = Chart[0]), todouble(val = Chart[1])\r\n| sort by val desc\r\n| sort by name desc",
+                "size": 1,
+                "title": "Alerts for all Selected Subscriptions",
+                "queryType": 1,
+                "resourceType": "microsoft.resourcegraph/resources",
+                "crossComponentResources": [
+                  "{Subscription}"
+                ],
+                "visualization": "tiles",
+                "tileSettings": {
+                  "titleContent": {
+                    "columnMatch": "name",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Total",
+                          "representation": "Alert",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Fired",
+                          "representation": "Fired",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Resolved",
+                          "representation": "Resolved",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev4",
+                          "representation": "Sev4",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev3",
+                          "representation": "Sev3",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev2",
+                          "representation": "Sev2",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev1",
+                          "representation": "Sev1",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev0",
+                          "representation": "Sev0",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "cancelled",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  "leftContent": {
+                    "columnMatch": "val",
+                    "formatter": 12,
+                    "formatOptions": {
+                      "palette": "blue"
+                    }
+                  },
+                  "showBorder": true
+                },
+                "graphSettings": {
+                  "type": 0
+                }
+              },
+              "name": "query - 0"
+            },
+            {
+              "type": 3,
+              "content": {
+                "version": "KqlItem/1.0",
+                "query": "alertsmanagementresources\r\n| extend FireTime = todatetime(properties.essentials.startDateTime), \r\n         Severity = tostring(properties.essentials.severity), \r\n         MonitorCondition = tostring(properties.essentials.monitorCondition), \r\n         AlertTarget = tostring(properties.essentials.targetResourceType), \r\n         MonitorService = tostring(properties.essentials.monitorService)\r\n| where FireTime {TimeRange}\r\n| extend AlertTarget = case(\r\n        MonitorService == 'ActivityLog Administrative', 'ActivityLog',\r\n        AlertTarget == 'microsoft.insights/components', 'App Insights',\r\n        AlertTarget == 'microsoft.operationalinsights/workspaces', 'Log Analytics', \r\n        AlertTarget)\r\n| where AlertTarget in~ ({AlertTarget}) or '*' in~ ({AlertTarget})\r\n| summarize Sev0 = countif(Severity == \"Sev0\"), \r\n            Sev1 = countif(Severity == \"Sev1\"), \r\n            Sev2 = countif(Severity == \"Sev2\"), \r\n            Sev3 = countif(Severity == \"Sev3\"), \r\n            Sev4 = countif(Severity == \"Sev4\"),\r\n            Resolved = countif(MonitorCondition == \"Resolve\"),\r\n            Fired = countif(MonitorCondition == \"Fired\"),\r\n            Total = count() by subscriptionId\r\n| sort by Fired desc",
+                "size": 0,
+                "title": "Alerts by Subscription",
+                "queryType": 1,
+                "resourceType": "microsoft.resourcegraph/resources",
+                "crossComponentResources": [
+                  "{Subscription}"
+                ],
+                "visualization": "table",
+                "gridSettings": {
+                  "formatters": [
+                    {
+                      "columnMatch": "$gen_group",
+                      "formatter": 15,
+                      "formatOptions": {
+                        "linkTarget": null,
+                        "showIcon": true
+                      }
+                    },
+                    {
+                      "columnMatch": "Group",
+                      "formatter": 15,
+                      "formatOptions": {
+                        "linkTarget": null,
+                        "showIcon": true
+                      }
+                    },
+                    {
+                      "columnMatch": "subscriptionId",
+                      "formatter": 5
+                    },
+                    {
+                      "columnMatch": "Total",
+                      "formatter": 22,
+                      "formatOptions": {
+                        "compositeBarSettings": {
+                          "labelText": "Total Alerts",
+                          "columnSettings": [
+                            {
+                              "columnName": "Sev0",
+                              "color": "redBright"
+                            },
+                            {
+                              "columnName": "Sev1",
+                              "color": "orange"
+                            },
+                            {
+                              "columnName": "Sev2",
+                              "color": "yellow"
+                            },
+                            {
+                              "columnName": "Sev3",
+                              "color": "blue"
+                            },
+                            {
+                              "columnName": "Sev4",
+                              "color": "blueDark"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "hierarchySettings": {
+                    "treeType": 1,
+                    "groupBy": [
+                      "subscriptionId"
+                    ],
+                    "expandTopLevel": true,
+                    "finalBy": "Total"
+                  },
+                  "sortBy": [
+                    {
+                      "itemKey": "Fired",
+                      "sortOrder": 2
+                    }
+                  ]
+                },
+                "sortBy": [
+                  {
+                    "itemKey": "Fired",
+                    "sortOrder": 2
+                  }
+                ],
+                "tileSettings": {
+                  "titleContent": {
+                    "columnMatch": "name",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Total",
+                          "representation": "Alert",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Fired",
+                          "representation": "Fired",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Resolved",
+                          "representation": "Resolved",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev4",
+                          "representation": "Sev4",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev3",
+                          "representation": "Sev3",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev2",
+                          "representation": "Sev2",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev1",
+                          "representation": "Sev1",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Sev0",
+                          "representation": "Sev0",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "cancelled",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  "leftContent": {
+                    "columnMatch": "val",
+                    "formatter": 12,
+                    "formatOptions": {
+                      "palette": "blue"
+                    }
+                  },
+                  "showBorder": true
+                },
+                "graphSettings": {
+                  "type": 0
+                }
+              },
+              "name": "query - 0 - Copy"
+            },
+            {
+              "type": 3,
+              "content": {
+                "version": "KqlItem/1.0",
+                "query": "alertsmanagementresources\r\n| extend FireTime = todatetime(properties.essentials.startDateTime), \r\n         LastModifiedTime = todatetime(properties.essentials.lastModifiedDateTime),\r\n         Severity = tostring(properties.essentials.severity), \r\n         MonitorCondition = tostring(properties.essentials.monitorCondition), \r\n         AlertTarget = tostring(properties.essentials.targetResourceType), \r\n         MonitorService = tostring(properties.essentials.monitorService),\r\n         ResolvedTime = todatetime(properties.essentials.monitorConditionResolvedDateTime)\r\n| where FireTime {TimeRange}\r\n| extend AlertTarget = case(\r\n                MonitorService == 'ActivityLog Administrative', 'ActivityLog',\r\n                AlertTarget == 'microsoft.insights/components', 'App Insights',\r\n                AlertTarget == 'microsoft.operationalinsights/workspaces', 'Log Analytics', \r\n                AlertTarget)   \r\n| where AlertTarget in~ ({AlertTarget}) or '*' in~ ({AlertTarget})           \r\n| mv-expand Condition = properties.context.context.condition.allOf\r\n| extend SignalLogic = case(\r\n                MonitorService == \"VM Insights - Health\", strcat(\"VM Health for \", properties.essentials.targetResourceName, \" Changed from \", properties.context.monitorStateBeforeAlertCreated, \" to \", properties.context.monitorStateWhenAlertCreated),\r\n                AlertTarget == \"ActivityLog\", strcat(\"When the Activity Log has Category = \", properties.context.context.activityLog.properties.eventCategory, \" and Signal name = \", properties.context.context.activityLog.properties.message),\r\n                MonitorService == \"Smart Detector\", strcat(properties.SmartDetectorName, \" Detected failure rate of \", properties.DetectedFailureRate, \" above normal failure rate of \", properties.context.NormalFailureRate),\r\n                MonitorService == \"Log Analytics\", strcat(\"Alert when \", properties.context.AlertType, \" is \", properties.context.AlertThresholdOperator, \" threshold \", properties.context.AlertThresholdValue),\r\n                MonitorService == \"ActivityLog Autoscale\", strcat(properties.context.context.activityLog.operationName, \" from \", properties.context.context.activityLog.properties.oldInstancesCount, \" to \", properties.context.context.activityLog.properties.newInstancesCount),\r\n                strcat(\"Alert when metric \", Condition.metricName, Condition.timeAggregation, \" is \", Condition.operator, \" threshold \", Condition.threshold)),\r\n         Query = case(\r\n                 MonitorService == \"Log Alerts V2\", tostring(Condition.searchQuery),\r\n                 MonitorService == \"Log Analytics\", tostring(properties.context.SearchQuery), \"N/A\"),\r\n         MetricValue = iff(MonitorService == \"Log Analytics\", toint(properties.context.ResultCount), toint(Condition.metricValue)),\r\n         AffectedResource = iff(AlertTarget == \"ActivityLog\", properties.context.context.activityLog.subscriptionId, tostring(properties.essentials.targetResourceName))\r\n| where AffectedResource in ({AffectedResource})\r\n| extend OpenTime = iff(MonitorCondition == \"Resolved\", datetime_diff('minute', ResolvedTime, FireTime), datetime_diff('minute', now(), FireTime)),\r\n         Details = pack_all()\r\n| project name, AlertTarget, id, subscriptionId, AffectedResource, MonitorCondition, FireTime, LastModifiedTime, OpenTime, SignalLogic, Query, MetricValue, Details",
+                "size": 2,
+                "showAnalytics": true,
+                "title": "Detailed Alert view for Selected Timerange",
+                "noDataMessage": "No Alerts in the Assigned Time Range",
+                "showExportToExcel": true,
+                "queryType": 1,
+                "resourceType": "microsoft.resourcegraph/resources",
+                "crossComponentResources": [
+                  "{Subscription}"
+                ],
+                "gridSettings": {
+                  "formatters": [
+                    {
+                      "columnMatch": "$gen_group",
+                      "formatter": 15,
+                      "formatOptions": {
+                        "linkTarget": "OpenBlade",
+                        "linkIsContextBlade": true,
+                        "showIcon": true,
+                        "bladeOpenContext": {
+                          "bladeName": "AlertDetailsTemplateBlade",
+                          "extensionName": "Microsoft_Azure_Monitoring",
+                          "bladeParameters": [
+                            {
+                              "name": "alertId",
+                              "source": "column",
+                              "value": "id"
+                            },
+                            {
+                              "name": "alertName",
+                              "source": "column",
+                              "value": "name"
+                            },
+                            {
+                              "name": "invokedFrom",
+                              "source": "static",
+                              "value": "Workbooks"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "columnMatch": "Group",
+                      "formatter": 15,
+                      "formatOptions": {
+                        "linkTarget": "OpenBlade",
+                        "linkIsContextBlade": true,
+                        "showIcon": true,
+                        "bladeOpenContext": {
+                          "bladeName": "AlertDetailsTemplateBlade",
+                          "extensionName": "Microsoft_Azure_Monitoring",
+                          "bladeParameters": [
+                            {
+                              "name": "alertId",
+                              "source": "column",
+                              "value": "id"
+                            },
+                            {
+                              "name": "alertName",
+                              "source": "column",
+                              "value": "name"
+                            },
+                            {
+                              "name": "invokedFrom",
+                              "source": "static",
+                              "value": "Workbooks"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "columnMatch": "name",
+                      "formatter": 5,
+                      "formatOptions": {
+                        "linkTarget": "OpenBlade",
+                        "linkIsContextBlade": true,
+                        "bladeOpenContext": {
+                          "bladeName": "AlertDetailsTemplateBlade",
+                          "extensionName": "Microsoft_Azure_Monitoring",
+                          "bladeParameters": [
+                            {
+                              "name": "alertId",
+                              "source": "column",
+                              "value": "id"
+                            },
+                            {
+                              "name": "alertName",
+                              "source": "column",
+                              "value": "name"
+                            },
+                            {
+                              "name": "invokedFrom",
+                              "source": "static",
+                              "value": "Workbooks"
+                            }
+                          ]
+                        }
+                      },
+                      "tooltipFormat": {
+                        "tooltip": "View alert details"
+                      }
+                    },
+                    {
+                      "columnMatch": "id",
+                      "formatter": 5
+                    },
+                    {
+                      "columnMatch": "subscriptionId",
+                      "formatter": 15,
+                      "formatOptions": {
+                        "linkTarget": "OpenBlade",
+                        "linkIsContextBlade": true,
+                        "showIcon": true,
+                        "bladeOpenContext": {
+                          "bladeName": "AlertDetailsTemplateBlade",
+                          "extensionName": "Microsoft_Azure_Monitoring",
+                          "bladeParameters": [
+                            {
+                              "name": "alertId",
+                              "source": "column",
+                              "value": "id"
+                            },
+                            {
+                              "name": "alertName",
+                              "source": "column",
+                              "value": "name"
+                            },
+                            {
+                              "name": "invokedFrom",
+                              "source": "static",
+                              "value": "Workbooks"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "columnMatch": "MonitorCondition",
+                      "formatter": 18,
+                      "formatOptions": {
+                        "thresholdsOptions": "icons",
+                        "thresholdsGrid": [
+                          {
+                            "operator": "==",
+                            "thresholdValue": "Fired",
+                            "representation": "2",
+                            "text": "{0}{1}"
+                          },
+                          {
+                            "operator": "==",
+                            "thresholdValue": "Resolved",
+                            "representation": "success",
+                            "text": "{0}{1}"
+                          },
+                          {
+                            "operator": "Default",
+                            "thresholdValue": null,
+                            "representation": "success",
+                            "text": "{0}{1}"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "columnMatch": "FireTime",
+                      "formatter": 6
+                    },
+                    {
+                      "columnMatch": "LastModifiedTime",
+                      "formatter": 6
+                    },
+                    {
+                      "columnMatch": "OpenTime",
+                      "formatter": 8,
+                      "formatOptions": {
+                        "palette": "greenRed"
+                      },
+                      "numberFormat": {
+                        "unit": 25,
+                        "options": {
+                          "style": "decimal"
+                        }
+                      }
+                    },
+                    {
+                      "columnMatch": "Details",
+                      "formatter": 7,
+                      "formatOptions": {
+                        "linkTarget": "CellDetails",
+                        "linkLabel": "🔍 View Details",
+                        "linkIsContextBlade": true
+                      }
+                    }
+                  ],
+                  "rowLimit": 10000,
+                  "filter": true,
+                  "hierarchySettings": {
+                    "treeType": 1,
+                    "groupBy": [
+                      "subscriptionId"
+                    ],
+                    "expandTopLevel": true,
+                    "finalBy": "name"
+                  }
+                }
+              },
+              "showPin": true,
+              "name": "query - 1"
+            }
+          ]
+        },
+        "conditionalVisibility": {
+          "parameterName": "tab",
+          "comparison": "isEqualTo",
+          "value": "active"
+        },
+        "name": "group - Active Alerts"
+      }
+    ],
+    "fallbackResourceIds": [
+      "Azure Monitor"
+    ],
+    "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+  }
