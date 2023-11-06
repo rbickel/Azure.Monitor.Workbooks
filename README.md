@@ -11,4 +11,5 @@ How to install a workbook:
 Templates available:
 
 - Logic App Standard synthetic view [LogicAppStandard/LogicAppSyntheticView.workbook](LogicAppStandard/LogicAppSyntheticView.workbook)
+
 - DTU Usage over the past X days [SQLDTU/SQLDTUUsage.md](SQLDTU/SQLDTUUsage.md)
