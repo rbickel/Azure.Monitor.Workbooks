@@ -10,4 +10,5 @@ How to install a workbook:
 
 Templates available:
 
-- DTU Usage over the past X days [SQLDTUUsage.md](SQLDTUUsage.md)
+- Logic App Standard synthetic view [LogicAppStandard/synthetic_gallery.json](LogicAppStandard/synthetic_gallery.json)
+- DTU Usage over the past X days [SQLDTU/SQLDTUUsage.md](SQLDTU/SQLDTUUsage.md)
